@@ -1,5 +1,6 @@
 import { getPageContent } from "@/lib/data";
 import { defaultAboutContent } from "@/lib/default-content";
+import { MARKETING_IMAGES } from "@/lib/marketing-images";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -21,35 +22,56 @@ export default async function AboutPage() {
     ...defaultAboutContent,
     ...(pageData.content as typeof defaultAboutContent),
   };
+  const heroImage = content.hero.image || MARKETING_IMAGES.aboutStory;
 
   return (
     <>
-      <section className="border-b border-border bg-gradient-to-br from-background via-card to-muted/40">
-        <div className="container-page py-16 sm:py-20">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-            About Us
-          </p>
-          <h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
-            {content.hero.title}
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            {content.hero.subtitle}
-          </p>
+      <section className="relative overflow-hidden border-b border-border bg-gradient-to-br from-background via-card to-muted/40">
+        <div className="container-page grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-2">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wide text-primary">
+              About Us
+            </p>
+            <h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">
+              {content.hero.title}
+            </h1>
+            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+              {content.hero.subtitle}
+            </p>
+          </div>
+          <div className="overflow-hidden rounded-3xl border border-border shadow-lg">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={heroImage}
+              alt={content.hero.title}
+              className="aspect-[4/3] w-full object-cover"
+            />
+          </div>
         </div>
       </section>
 
       <section className="section-padding">
         <div className="container-page">
-          <div className="mx-auto max-w-3xl">
-            <h2 className="font-display text-3xl font-semibold">
-              {content.story.title}
-            </h2>
-            <div className="mt-6 space-y-5 text-muted-foreground">
-              {content.story.paragraphs.map((paragraph, index) => (
-                <p key={index} className="leading-relaxed">
-                  {paragraph}
-                </p>
-              ))}
+          <div className="grid items-start gap-12 lg:grid-cols-2">
+            <div>
+              <h2 className="font-display text-3xl font-semibold">
+                {content.story.title}
+              </h2>
+              <div className="mt-6 space-y-5 text-muted-foreground">
+                {content.story.paragraphs.map((paragraph, index) => (
+                  <p key={index} className="leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="overflow-hidden rounded-3xl border border-border shadow-lg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={MARKETING_IMAGES.hero}
+                alt="Curated resale finds"
+                className="aspect-[4/3] w-full object-cover"
+              />
             </div>
           </div>
         </div>

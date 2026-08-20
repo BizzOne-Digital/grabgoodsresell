@@ -9,6 +9,7 @@ import {
   getPublishedTestimonials,
 } from "@/lib/data";
 import { defaultFAQs, defaultHomeContent, defaultTestimonials } from "@/lib/default-content";
+import { getCategoryImage, MARKETING_IMAGES } from "@/lib/marketing-images";
 import type { FAQItem, Product, TestimonialItem } from "@/types";
 import {
   ArrowRight,
@@ -17,7 +18,6 @@ import {
   Search,
   ShoppingCart,
   Sparkles,
-  Tag,
   Truck,
 } from "lucide-react";
 import Link from "next/link";
@@ -60,6 +60,8 @@ export default async function HomePage() {
     ]);
 
   const content = { ...defaultHomeContent, ...(pageData.content as typeof defaultHomeContent) };
+  const heroImage = content.hero.image || MARKETING_IMAGES.hero;
+  const aboutImage = content.about.image || MARKETING_IMAGES.aboutStory;
 
   const displayTestimonials = (
     testimonials.length > 0
@@ -117,7 +119,7 @@ export default async function HomePage() {
               </div>
             </div>
             <HeroImage
-              src={content.hero.image}
+              src={heroImage}
               alt={content.hero.title}
             />
           </div>
@@ -228,22 +230,13 @@ export default async function HomePage() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="rounded-3xl border border-border bg-gradient-to-br from-primary/5 via-card to-secondary/20 p-8 lg:p-10">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {content.whyShop.items.slice(0, 2).map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-2xl border border-border bg-card p-5"
-                  >
-                    <h3 className="font-display text-lg font-semibold">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <div className="overflow-hidden rounded-3xl border border-border shadow-lg">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={aboutImage}
+                alt={content.about.title}
+                className="aspect-[4/3] w-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -296,18 +289,30 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-            {categories.map((category) => (
-              <Link
-                key={category.slug ?? category.name}
-                href={`/shop?category=${encodeURIComponent(category.name)}`}
-                className="group flex flex-col items-center rounded-2xl border border-border bg-card p-5 text-center transition hover:-translate-y-1 hover:border-primary hover:shadow-lg"
-              >
-                <span className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
-                  <Tag className="h-5 w-5" />
-                </span>
-                <span className="text-sm font-semibold">{category.name}</span>
-              </Link>
-            ))}
+            {categories.map((category) => {
+              const image = getCategoryImage(category.name);
+
+              return (
+                <Link
+                  key={category.slug ?? category.name}
+                  href={`/shop?category=${encodeURIComponent(category.name)}`}
+                  className="group overflow-hidden rounded-2xl border border-border bg-card text-center transition hover:-translate-y-1 hover:border-primary hover:shadow-lg"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={image}
+                      alt={category.name}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
+                    <span className="absolute inset-x-0 bottom-0 px-3 py-4 text-sm font-semibold text-white">
+                      {category.name}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

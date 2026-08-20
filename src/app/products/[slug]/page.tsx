@@ -22,14 +22,15 @@ export async function generateMetadata({
     return { title: "Product Not Found" };
   }
 
-  const title = product.metaTitle || product.name;
+  const title =
+    ("metaTitle" in product && product.metaTitle) || product.name;
   const description =
-    product.metaDescription ||
+    ("metaDescription" in product && product.metaDescription) ||
     product.shortDescription ||
     product.description?.slice(0, 160) ||
     `${product.name} — available at Grab My Goods Resell.`;
 
-  const primaryImage = product.images[0];
+  const primaryImage = product.images?.[0] as ProductImage | undefined;
   const imageUrl =
     product.thumbnail ||
     primaryImage?.url ||

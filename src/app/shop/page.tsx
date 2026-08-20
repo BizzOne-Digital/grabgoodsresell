@@ -1,6 +1,7 @@
 import { ShopContent } from "@/app/shop/ShopContent";
 import { queryProducts } from "@/lib/api-helpers";
 import { getCategories } from "@/lib/data";
+import { MARKETING_IMAGES } from "@/lib/marketing-images";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -29,12 +30,21 @@ export default async function ShopPage({
 
   return (
     <>
-      <section className="border-b border-border bg-muted/30">
-        <div className="container-page py-12 sm:py-16">
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={MARKETING_IMAGES.shopBanner}
+            alt="Browse resale inventory"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/40" />
+        </div>
+        <div className="container-page relative py-16 sm:py-20">
           <p className="text-sm font-semibold uppercase tracking-wide text-primary">
             Full Inventory
           </p>
-          <h1 className="mt-2 font-display text-4xl font-semibold sm:text-5xl">
+          <h1 className="mt-2 max-w-2xl font-display text-4xl font-semibold sm:text-5xl">
             Shop All Finds
           </h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">

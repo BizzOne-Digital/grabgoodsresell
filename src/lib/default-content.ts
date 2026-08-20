@@ -7,7 +7,7 @@ export const defaultHomeContent = {
       "From vintage treasures and estate-sale surprises to practical everyday items — browse our full inventory online and reserve what you love for local pickup.",
     primaryButton: { label: "Shop Inventory", href: "/shop" },
     secondaryButton: { label: "Ask About an Item", href: "/contact" },
-    image: "",
+    image: "/images/marketing/hero.png",
   },
   howItWorks: {
     title: "How It Works",
@@ -35,6 +35,7 @@ export const defaultHomeContent = {
   },
   about: {
     title: "About Grab My Goods Resell",
+    image: "/images/marketing/about-story.png",
     content:
       "I've always had a passion for uncovering hidden gems — whether it's garage sales, estate finds, or the occasional lucky storage unit. You could say I've got a little Indiana Jones in me — I love the thrill of the hunt! I specialize in vintage finds, household goods, collectibles, and unique pieces that deserve a second life.",
     secondaryContent:
@@ -94,6 +95,7 @@ export const defaultAboutContent = {
   hero: {
     title: "About Grab My Goods Resell",
     subtitle: "A local resale business built on trust, fair pricing, and great finds.",
+    image: "/images/marketing/about-story.png",
   },
   story: {
     title: "Our Story",
